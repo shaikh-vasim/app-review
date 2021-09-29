@@ -4,6 +4,8 @@ import pickle
 
 def index_func(request):
     res = 0
+    fords_app =0
+
     if request.method == 'POST':
         name = request.POST['Name']
         category = request.POST['category']
@@ -33,6 +35,14 @@ def index_func(request):
             loaded_model = pickle.load(open(filename1, 'rb'))
 
             res = loaded_model.predict(data)
+            if res > 3.5:
+                fords_app = "This app is Good "
+            elif res > 4:
+                fords_app = "This app is Awesome "
+            elif res > 4.5:
+                fords_app = "This app is Great "
+            else:
+                fords_app = "This app is ford app"
             print(res)
 
         else:
@@ -40,4 +50,4 @@ def index_func(request):
     else:
         pass
 
-    return render(request, "index.html", {'response': res})
+    return render(request, "index.html", {'response': res , 'ford': fords_app  })
